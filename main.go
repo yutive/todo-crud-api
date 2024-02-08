@@ -33,9 +33,22 @@ func main() {
 	//Home Handler
 	r.GET("/", HomeHandler)
 
-	//get Todos
-	r.GET("/todos", GetTodos)
+	// Versioning of API
+	v1 := r.Group("/api/v1")
+	{
+		//get Todos
+		v1.GET("/todos", GetTodos)
+	}
+
+	// Handle error response when a route is not defined
+	r.NoRoute(func(c *gin.Context) {
+		// return json if route is not defined
+		c.JSON(404, gin.H{"message": "Not found"})
+	})
 
 	// listen and serve on localhost:8080
-	r.Run()
+	err := r.Run()
+	if err != nil {
+		return
+	}
 }
