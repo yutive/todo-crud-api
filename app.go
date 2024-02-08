@@ -3,21 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/yutive/todo-crud-api/models"
-	"net/http"
+	"github.com/yutive/todo-crud-api/controllers"
 )
-
-var todo []models.Todo
-
-func HomeHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "todo crud api",
-	})
-}
-
-func GetTodos(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, todo)
-}
 
 func main() {
 	//starter text
@@ -26,18 +13,14 @@ func main() {
 	//start gin server
 	r := gin.Default()
 
-	//	db
-	todo = append(todo, models.Todo{ID: "0", Text: "wash dishes"})
-	todo = append(todo, models.Todo{ID: "1", Text: "watch football"})
-
 	//Home Handler
-	r.GET("/", HomeHandler)
+	r.GET("/", controllers.HomeHandler)
 
 	// Versioning of API
 	v1 := r.Group("/api/v1")
 	{
 		//get Todos
-		v1.GET("/todos", GetTodos)
+		v1.GET("/todos", controllers.GetTodos)
 	}
 
 	// Handle error response when a route is not defined
