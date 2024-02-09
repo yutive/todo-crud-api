@@ -57,3 +57,18 @@ func UpdateTodo(c *gin.Context) {
 
 	c.JSON(http.StatusNotFound, gin.H{"message": "Todo not found"})
 }
+
+func DeleteTodo(c *gin.Context) {
+	id := c.Param("id")
+
+	for i, todo := range todos {
+		if todo.ID == id {
+			// Remove the todo from the slice.
+			todos = append(todos[:i], todos[i+1:]...)
+			c.JSON(http.StatusOK, gin.H{"message": "Todo deleted"})
+			return
+		}
+	}
+
+	c.JSON(http.StatusNotFound, gin.H{"message": "Todo not found"})
+}

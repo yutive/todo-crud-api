@@ -27,6 +27,8 @@ func main() {
 		v1.POST("/create", controllers.CreateTodo)
 		// Update Todo
 		v1.PUT("/update/:id", controllers.UpdateTodo)
+		// Delete Todo
+		v1.DELETE("/delete/:id", controllers.DeleteTodo)
 	}
 
 	// Handle error response when a route is not defined
