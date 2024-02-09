@@ -17,3 +17,12 @@ func HomeHandler(c *gin.Context) {
 func GetTodos(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, todo)
 }
+
+func NewTodo(c *gin.Context) {
+	var newTodo models.Todo
+	if err := c.BindJSON(&newTodo); err != nil {
+		return
+	}
+	todo = append(todo, newTodo)
+	c.IndentedJSON(http.StatusCreated, newTodo)
+}

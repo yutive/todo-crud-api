@@ -21,6 +21,7 @@ func main() {
 	{
 		//get Todos
 		v1.GET("/todos", controllers.GetTodos)
+		v1.POST("/create", controllers.NewTodo)
 	}
 
 	// Handle error response when a route is not defined
