@@ -37,32 +37,32 @@ go run main.go
 
 ### Get all Todos
 
-- URL: `/todos`
+- URL: `api/v1/todos`
 - Method: `GET`
 - Description: Returns a list of all todos
 
 ### Get a Todo by ID
 
-- URL: `/todos/:id`
+- URL: `api/v1/todos/:id`
 - Method: `GET`
 - Description: Returns a single todo with the specified ID
 
 ### Create a new Todo
 
-- URL: `/todos`
+- URL: `api/v1/todos`
 - Method: `POST`
 - Description: Creates a new todo
 - Body: `{"id": "<id>", "text": "<text>"}`
 
 ### Update a Todo
 
-- URL: `/todos/:id`
+- URL: `api/v1/todos/:id`
 - Method: `PUT`
 - Description: Updates the todo with the specified ID
 - Body: `{"id": "<id>", "text": "<text>"}`
 
 ### Delete a Todo
 
-- URL: `/todos/:id`
+- URL: `api/v1/todos/:id`
 - Method: `DELETE`
 - Description: Deletes the todo with the specified ID
