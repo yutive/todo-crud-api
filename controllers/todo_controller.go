@@ -6,16 +6,27 @@ import (
 	"net/http"
 )
 
-var todo []models.Todo
+var todos []models.Todo
 
 func HomeHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"message": "todo crud api",
+		"message": "todos crud api",
 	})
 }
 
 func GetTodos(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, todo)
+	c.IndentedJSON(http.StatusOK, todos)
+}
+
+func GetTodoById(c *gin.Context) {
+	id := c.Param("id")
+	for i, todo := range todos {
+		if todo.ID == id {
+			c.JSON(http.StatusOK, todos[i])
+			return
+		}
+	}
+	c.JSON(http.StatusNotFound, gin.H{"message": "Todo not found"})
 }
 
 func CreateTodo(c *gin.Context) {
@@ -23,6 +34,6 @@ func CreateTodo(c *gin.Context) {
 	if err := c.BindJSON(&newTodo); err != nil {
 		return
 	}
-	todo = append(todo, newTodo)
+	todos = append(todos, newTodo)
 	c.IndentedJSON(http.StatusCreated, newTodo)
 }

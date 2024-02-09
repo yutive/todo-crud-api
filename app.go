@@ -19,8 +19,11 @@ func main() {
 	// Versioning of API
 	v1 := r.Group("/api/v1")
 	{
-		//get Todos
+		//Get Todos
 		v1.GET("/todos", controllers.GetTodos)
+		// Get Todo by ID
+		v1.GET("/todo/:id", controllers.GetTodoById)
+		//Post Todo
 		v1.POST("/create", controllers.CreateTodo)
 	}
 
