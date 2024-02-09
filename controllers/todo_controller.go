@@ -18,7 +18,7 @@ func GetTodos(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, todo)
 }
 
-func NewTodo(c *gin.Context) {
+func CreateTodo(c *gin.Context) {
 	var newTodo models.Todo
 	if err := c.BindJSON(&newTodo); err != nil {
 		return
