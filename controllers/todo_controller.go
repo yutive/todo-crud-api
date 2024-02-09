@@ -9,9 +9,7 @@ import (
 var todos []models.Todo
 
 func HomeHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "todos crud api",
-	})
+	c.JSON(http.StatusOK, gin.H{"message": "todos crud api"})
 }
 
 func GetTodos(c *gin.Context) {
@@ -20,9 +18,9 @@ func GetTodos(c *gin.Context) {
 
 func GetTodoById(c *gin.Context) {
 	id := c.Param("id")
-	for i, todo := range todos {
+	for _, todo := range todos {
 		if todo.ID == id {
-			c.JSON(http.StatusOK, todos[i])
+			c.JSON(http.StatusOK, todo)
 			return
 		}
 	}
@@ -31,7 +29,8 @@ func GetTodoById(c *gin.Context) {
 
 func CreateTodo(c *gin.Context) {
 	var newTodo models.Todo
-	if err := c.BindJSON(&newTodo); err != nil {
+	if err := c.ShouldBindJSON(&newTodo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid request body", "error": err.Error()})
 		return
 	}
 	todos = append(todos, newTodo)
@@ -42,8 +41,8 @@ func UpdateTodo(c *gin.Context) {
 	id := c.Param("id")
 	var updatedTodo models.Todo
 
-	if err := c.BindJSON(&updatedTodo); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid request body"})
+	if err := c.ShouldBindJSON(&updatedTodo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid request body", "error": err.Error()})
 		return
 	}
 
@@ -63,7 +62,6 @@ func DeleteTodo(c *gin.Context) {
 
 	for i, todo := range todos {
 		if todo.ID == id {
-			// Remove the todo from the slice.
 			todos = append(todos[:i], todos[i+1:]...)
 			c.JSON(http.StatusOK, gin.H{"message": "Todo deleted"})
 			return
