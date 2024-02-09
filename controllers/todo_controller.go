@@ -37,3 +37,23 @@ func CreateTodo(c *gin.Context) {
 	todos = append(todos, newTodo)
 	c.IndentedJSON(http.StatusCreated, newTodo)
 }
+
+func UpdateTodo(c *gin.Context) {
+	id := c.Param("id")
+	var updatedTodo models.Todo
+
+	if err := c.BindJSON(&updatedTodo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid request body"})
+		return
+	}
+
+	for i, todo := range todos {
+		if todo.ID == id {
+			todos[i] = updatedTodo
+			c.JSON(http.StatusOK, updatedTodo)
+			return
+		}
+	}
+
+	c.JSON(http.StatusNotFound, gin.H{"message": "Todo not found"})
+}
